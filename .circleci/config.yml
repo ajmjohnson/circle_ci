@@ -3,7 +3,7 @@ jobs:
   build:
     parallelism: 3
     docker:
-      - image: ruby/2.2-onbuild
+      - image: ruby:2.2-onbuild
         # - image: circleci/ruby:2-node
       #   environment:
       #     BUNDLE_JOBS: 3
