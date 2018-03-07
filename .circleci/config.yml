@@ -5,13 +5,16 @@ jobs:
        - image: circleci/ruby:2-node
    steps:
      - checkout
+
      - run: echo "hello world"
-     - run:
-        name: Which bundler?
-        command: bundle -v
-     - run:
-        name: Bundle Install
-        command: bundle check || bundle install
+
+     # - run:
+     #    name: Which bundler?
+     #    command: bundle -v
+     #
+     # - run:
+     #    name: Bundle Install
+     #    command: bundle check || bundle install
 
     #      # Run rspec in parallel
     #  - type: shell
