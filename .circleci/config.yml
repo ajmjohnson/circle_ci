@@ -29,6 +29,9 @@ jobs:
           name: Which ruby?
           command: ruby -v
 
+      - run:
+          name: Install RVM
+          command: \curl -sSL https://get.rvm.io | bash
 
       - run:
           name: RVM?
