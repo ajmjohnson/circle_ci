@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    parallelism: 3
+    # parallelism: 3
     docker:
       - image: circleci/ruby:2.1
         # - image: circleci/ruby:2-node
@@ -40,6 +40,7 @@ jobs:
       #     command: bundle check || bundle install
 
       - type: shell
+        command: bundle exec rspec spec/models/product_spec.rb
         command: bundle exec rspec
 
       # - type: shell
