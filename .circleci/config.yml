@@ -73,7 +73,7 @@ jobs:
 
       - run:
           name: Database setup
-          command: bin/rake db:schema:load --
+          command: bundle exec rake db:schema:load --
 
       - type: shell
         command: |
