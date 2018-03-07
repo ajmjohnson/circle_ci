@@ -15,8 +15,7 @@ RSpec.describe Product, :type => :model do
 
   it "price is not valid if it is not a number" do
     subject.price = "£4.00"
-    # expect(subject).to_not be_valid
-      expect(subject).to be_valid
+    expect(subject).to_not be_valid
   end
 
   # it "is not valid if description is nil"
