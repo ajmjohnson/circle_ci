@@ -20,6 +20,10 @@ jobs:
       - checkout
 
       - run: echo "hello world"
+      
+      - run:
+          name: Which bundler?
+          command: bundle -v
      # - run:
      #    name: Which bundler?
      #    command: bundle -v
