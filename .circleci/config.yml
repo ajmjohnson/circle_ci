@@ -30,6 +30,18 @@ jobs:
           name: Which ruby?
           command: ruby -v
 
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+
+      - type: shell
+        command: |
+          bundle exec rspec --profile 10 \
+                            --format RspecJunitFormatter \
+                            --out test_results/rspec.xml \
+                            --format progress \
+                            $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+
       # - run:
       #     name: Bundle Install
       #     command: bundle check || bundle install
