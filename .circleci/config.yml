@@ -4,22 +4,26 @@ jobs:
      docker:
        - image: circleci/ruby:2-node
    steps:
-     - checkout
-     - run: echo "hello world"
+      - checkout
+      - run: echo "hello world"
 
-     - run:
-        name: Which bundler?
-        command: bundle -v
+      - run:
+          name: Which bundler?
+          command: bundle -v
 
-         # Run rspec in parallel
-     - type: shell
-        command: |
-        bundle exec rspec --profile 10 \
-                          --format RspecJunitFormatter \
-                          --out test_results/rspec.xml \
-                          --format progress \
-                          $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
 
-    # Save test results for timing analysis
-     - store_test_results:
-        path: test_results
+    #      # Run rspec in parallel
+    #  - type: shell
+    #     command: |
+    #     bundle exec rspec --profile 10 \
+    #                       --format RspecJunitFormatter \
+    #                       --out test_results/rspec.xml \
+    #                       --format progress \
+    #                       $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+    #
+    # # Save test results for timing analysis
+    #  - store_test_results:
+    #     path: test_results
