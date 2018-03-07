@@ -6,10 +6,10 @@ jobs:
       - image: circleci/ruby:2.1
         # - image: circleci/ruby:2-node
       # - image: ruby:2.2-onbuild
-      #   environment:
-      #     BUNDLE_JOBS: 3
-      #     BUNDLE_RETRY: 3
-      #     BUNDLE_PATH: vendor/bundle
+        environment:
+          BUNDLE_JOBS: 3
+          BUNDLE_RETRY: 3
+          BUNDLE_PATH: vendor/bundle
       #     PGHOST: 127.0.0.1
       #     PGUSER: circleci-demo-ruby
       #     RAILS_ENV: test
