@@ -32,16 +32,64 @@ jobs:
           command: ruby -v
 
       - run:
+          name: Update Bundler
+          command: gem install bundler
+
+      # Restore bundle cache
+      - restore_cache:
+          keys:
+            - rails-demo-bundle-v2-{{ checksum "Gemfile.lock" }}
+            - rails-demo-bundle-v2-
+
+      - run:
           name: Bundle Install
-          command: bundle check || bundle update
+          command: bundle check || bundle install
+
+      # Store bundle cache
+      - save_cache:
+          key: rails-demo-bundle-v2-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+      # Only necessary if app uses webpacker or yarn in some other way
+      - restore_cache:
+          keys:
+            - rails-demo-yarn-{{ checksum "yarn.lock" }}
+            - rails-demo-yarn-
+
+      - run:
+          name: Yarn Install
+          command: yarn install --cache-folder ~/.cache/yarn
+
+      # Store yarn / webpacker cache
+      - save_cache:
+          key: rails-demo-yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+
+      # - run:
+      #     name: Wait for DB
+      #     command: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      - run:
+          name: Database setup
+          command: bin/rails db:schema:load --
+
+      - type: shell
+        command: |
+          bundle exec rspec --profile 10 \
+                            --format RspecJunitFormatter \
+                            --out test_results/rspec.xml \
+                            --format progress \
+                            $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
 
       # - run:
       #     name: Bundle Install
       #     command: bundle check || bundle install
 
-      - type: shell
-        command: bundle exec rspec spec/models/product_spec.rb
-        command: bundle exec rspec
+      # - type: shell
+      #   command: bundle exec rspec spec/models/product_spec.rb
+      #   command: bundle exec rspec
 
       # - type: shell
       #   command: |
