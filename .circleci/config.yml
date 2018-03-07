@@ -35,6 +35,10 @@ jobs:
           name: Update Bundler
           command: gem install bundler
 
+      - run:
+          name: Install Node
+          command: sudo apt-get install nodejs
+
       # Restore bundle cache
       - restore_cache:
           keys:
@@ -70,6 +74,11 @@ jobs:
       # - run:
       #     name: Wait for DB
       #     command: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+
+
+
+
 
       - run:
           name: Database setup
