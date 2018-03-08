@@ -3,25 +3,27 @@ jobs:
   build:
     # parallelism: 3
     docker:
-      - image: circleci/ruby:2.1
+      - image: ajmjohnson/finery-primary:0.0.1
+        environment:
+          RAILS_ENV: test
+      # - image: circleci/ruby:2.1
+
         # - image: circleci/ruby:2-node
       # - image: ruby:2.2-onbuild
-        environment:
-          BUNDLE_JOBS: 3
-          BUNDLE_RETRY: 3
-          BUNDLE_PATH: vendor/bundle
+        # environment:
+        #   BUNDLE_JOBS: 3
+        #   BUNDLE_RETRY: 3
+        #   BUNDLE_PATH: vendor/bundle
       #     PGHOST: 127.0.0.1
       #     PGUSER: circleci-demo-ruby
-      #     RAILS_ENV: test
-      # - image: circleci/postgres:9.5-alpine
+          # RAILS_ENV: test
+      # - image: circleci/mysql:5.7.19
       #   environment:
-      #     POSTGRES_USER: circleci-demo-ruby
+      #     POSTGRES_USER: finery
       #     POSTGRES_DB: rails_blog
       #     POSTGRES_PASSWORD: ""
     steps:
       - checkout
-
-      - run: echo "hello world"
 
       - run:
           name: Which bundler?
@@ -32,12 +34,24 @@ jobs:
           command: ruby -v
 
       - run:
+          name: Which Node?
+          command: node -v
+
+      # - run:
+      #     name: Install RVM
+      #     command: \curl -sSL https://get.rvm.io | bash
+      #
+      # - run:
+      #     name: RVM?
+      #     command: rvm list rubies
+
+      - run:
           name: Update Bundler
           command: gem install bundler
 
-      - run:
-          name: Install Node
-          command: sudo apt-get install nodejs
+      # - run:
+      #     name: Install Node
+      #     command: sudo apt-get install nodejs
 
       # Restore bundle cache
       - restore_cache:
