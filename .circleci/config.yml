@@ -4,6 +4,8 @@ jobs:
     # parallelism: 3
     docker:
       - image: ajmjohnson/finery-primary:0.0.1
+        environment:
+          RAILS_ENV: test
       # - image: circleci/ruby:2.1
 
         # - image: circleci/ruby:2-node
